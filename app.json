@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "rn-second-app",
-    "slug": "rn-second-app",
+    "name": "guess-number-rn",
+    "slug": "guess-number-rn",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
