@@ -1,16 +1,50 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, Button, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { StyleSheet, View, Text, Button, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
 
 import Colors from '../constants/colors';
 import Card from '../components/Card';
 import Input from '../components/Input';
+import NumberContainer from '../components/NumberContainer';
 
 function StartGame(props) {
   const [number, setNumber] = useState('');
+  const [confirmed, setConfirmed] = useState(false);
+  const [selectedNumber, setSelectedNumber] = useState();
 
   const inputHandler = (value) => {
     setNumber(value.replace(/[^0-9]/g, ''));
   };
+
+  const resetHandler = () => {
+    setNumber('');
+    setSelectedNumber();
+    setConfirmed(false);
+  };
+
+  const confirmHandler = () => {
+    const chosenNumber = parseInt(number);
+    if (isNaN(chosenNumber) || chosenNumber <= 0 || chosenNumber > 99) {
+      Alert.alert('Invalid number!', 'Number has to be a number between 1 and 99', [
+        { text: 'Dismiss', style: 'destructive', onPress: resetHandler },
+      ]);
+      return;
+    }
+    setConfirmed(true);
+    setNumber('');
+    setSelectedNumber(chosenNumber);
+    Keyboard.dismiss();
+  };
+
+  let confirmedOutput = null;
+  if (confirmed) {
+    confirmedOutput = (
+      <Card style={styles.summaryContainer}>
+        <Text style={styles.text}>You selected</Text>
+        <NumberContainer>{selectedNumber}</NumberContainer>
+        <Button title="START GAME" color={Colors.primary} />
+      </Card>
+    );
+  }
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -22,7 +56,7 @@ function StartGame(props) {
             blurOnSubmit
             autoCapitalize="none"
             autoCorrect={false}
-            keyboardType="numeric"
+            keyboardType="number-pad"
             maxLength={2}
             placeholder="Type.."
             placeholderTextColor={Colors.accent}
@@ -32,13 +66,14 @@ function StartGame(props) {
           />
           <View style={styles.buttonContainer}>
             <View style={styles.button}>
-              <Button title="Reset" onPress={() => {}} color={Colors.accent} />
+              <Button title="Reset" onPress={resetHandler} color={Colors.accent} />
             </View>
             <View style={styles.button}>
-              <Button title="Confirm" onPress={() => {}} color={Colors.primary} />
+              <Button title="Confirm" onPress={confirmHandler} color={Colors.primary} />
             </View>
           </View>
         </Card>
+        {confirmedOutput}
       </View>
     </TouchableWithoutFeedback>
   );
@@ -78,6 +113,11 @@ const styles = StyleSheet.create({
     width: 100,
     textAlign: 'center',
     color: Colors.white,
+  },
+  summaryContainer: {
+    marginTop: 20,
+    alignItems: 'center',
+    width: 200,
   },
 });
 
