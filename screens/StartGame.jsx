@@ -106,7 +106,8 @@ const styles = StyleSheet.create({
     borderRadius: 6,
   },
   input: {
-    width: 100,
+    width: 120,
+    height: 40,
     textAlign: 'center',
     color: Colors.white,
   },

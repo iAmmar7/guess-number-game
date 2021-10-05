@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+
+import Colors from '../constants/colors';
 
 function Card(props) {
   return <View style={{ ...styles.card, ...props.style }}>{props.children}</View>;
@@ -17,9 +18,11 @@ const styles = StyleSheet.create({
     // Use elevation for shadown on Andriod
     elevation: 1,
 
-    borderColor: Colors.primary,
+    backgroundColor: Colors.secondary,
+    // borderColor: 'grey',
     padding: 20,
-    borderRadius: 4,
+    borderRadius: 10,
+    borderWidth: 1,
   },
 });
 
