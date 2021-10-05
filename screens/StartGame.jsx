@@ -6,7 +6,7 @@ import Card from '../components/Card';
 import Input from '../components/Input';
 import NumberContainer from '../components/NumberContainer';
 
-function StartGame(props) {
+function StartGame({ onStartGame }) {
   const [number, setNumber] = useState('');
   const [confirmed, setConfirmed] = useState(false);
   const [selectedNumber, setSelectedNumber] = useState();
@@ -35,17 +35,6 @@ function StartGame(props) {
     Keyboard.dismiss();
   };
 
-  let confirmedOutput = null;
-  if (confirmed) {
-    confirmedOutput = (
-      <Card style={styles.summaryContainer}>
-        <Text style={styles.text}>You selected</Text>
-        <NumberContainer>{selectedNumber}</NumberContainer>
-        <Button title="START GAME" color={Colors.primary} />
-      </Card>
-    );
-  }
-
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.screen}>
@@ -73,7 +62,14 @@ function StartGame(props) {
             </View>
           </View>
         </Card>
-        {confirmedOutput}
+        {/* {confirmedOutput} */}
+        {selectedNumber && (
+          <Card style={styles.summaryContainer}>
+            <Text style={styles.text}>You selected</Text>
+            <NumberContainer>{selectedNumber}</NumberContainer>
+            <Button title="START GAME" color={Colors.primary} onPress={() => onStartGame(selectedNumber)} />
+          </Card>
+        )}
       </View>
     </TouchableWithoutFeedback>
   );
