@@ -69,6 +69,7 @@ const styles = StyleSheet.create({
     color: Colors.white,
     fontSize: 20,
     marginVertical: 10,
+    fontFamily: 'open-sans-bold',
   },
   btnContainer: {
     flexDirection: 'row',
