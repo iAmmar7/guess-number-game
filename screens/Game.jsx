@@ -1,8 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, StyleSheet, Button, Alert } from 'react-native';
+import { View, Text, StyleSheet, Alert } from 'react-native';
 
 import NumberContainer from '../components/NumberContainer';
 import Card from '../components/Card';
+import MainButton from '../components/MainButton';
 import DefaultStyles from '../constants/default-styles';
 import Colors from '../constants/colors';
 
@@ -36,6 +37,7 @@ const GameScree = ({ userChoice, onGameOver }) => {
       (direction === 'greater' && currentGuess > userChoice)
     ) {
       Alert.alert("Don't lie!", 'You know that this is wrong...', [{ text: 'Sorry!', style: 'cancel' }]);
+      return;
     }
     if (direction === 'lower') {
       currentHigh.current = currentGuess;
@@ -52,8 +54,12 @@ const GameScree = ({ userChoice, onGameOver }) => {
       <Text style={{ ...DefaultStyles.title, ...styles.title }}>My guess</Text>
       <NumberContainer>{currentGuess}</NumberContainer>
       <Card style={styles.btnContainer}>
-        <Button title="Lower?" onPress={nextGuessHandler.bind(this, 'lower')} />
-        <Button title="Greater?" onPress={nextGuessHandler.bind(this, 'greater')} />
+        <MainButton size="small" type="secondary" onPress={() => nextGuessHandler('lower')}>
+          Lower?
+        </MainButton>
+        <MainButton size="small" onPress={() => nextGuessHandler('greater')}>
+          Greater?
+        </MainButton>
       </Card>
     </View>
   );

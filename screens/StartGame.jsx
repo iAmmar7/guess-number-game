@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Button, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
+import { StyleSheet, View, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
 
 import Colors from '../constants/colors';
 import Card from '../components/Card';
 import Input from '../components/Input';
 import BodyText from '../components/BodyText';
 import TitleText from '../components/TitleText';
+import MainButton from '../components/MainButton';
 import NumberContainer from '../components/NumberContainer';
 
 function StartGame({ onStartGame }) {
@@ -56,12 +57,12 @@ function StartGame({ onStartGame }) {
             style={styles.input}
           />
           <View style={styles.buttonContainer}>
-            <View style={styles.button}>
-              <Button title="Reset" onPress={resetHandler} color={Colors.accent} />
-            </View>
-            <View style={styles.button}>
-              <Button title="Confirm" onPress={confirmHandler} color={Colors.primary} />
-            </View>
+            <MainButton size="small" type="secondary" onPress={resetHandler}>
+              Reset
+            </MainButton>
+            <MainButton size="small" onPress={confirmHandler}>
+              Confirm
+            </MainButton>
           </View>
         </Card>
         {/* {confirmedOutput} */}
@@ -69,7 +70,7 @@ function StartGame({ onStartGame }) {
           <Card style={styles.summaryContainer}>
             <BodyText>You selected</BodyText>
             <NumberContainer>{selectedNumber}</NumberContainer>
-            <Button title="START GAME" color={Colors.primary} onPress={() => onStartGame(selectedNumber)} />
+            <MainButton onPress={() => onStartGame(selectedNumber)}>START GAME</MainButton>
           </Card>
         )}
       </View>
@@ -95,13 +96,9 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: 'row',
-    width: '100%',
+    width: '90%',
     justifyContent: 'space-between',
     paddingHorizontal: 15,
-  },
-  button: {
-    width: 100,
-    borderRadius: 6,
   },
   input: {
     width: 120,
@@ -112,7 +109,7 @@ const styles = StyleSheet.create({
   summaryContainer: {
     marginTop: 20,
     alignItems: 'center',
-    width: 200,
+    width: 220,
   },
 });
 
