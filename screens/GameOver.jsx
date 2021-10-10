@@ -1,14 +1,28 @@
 import React from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
+import { View, Text, StyleSheet, Button, Image } from 'react-native';
 
+import BodyText from '../components/BodyText';
+import TitleText from '../components/TitleText';
 import Colors from '../constants/colors';
 
 const GameOver = ({ rounds, userNumber, onNewGame }) => {
   return (
     <View style={styles.screen}>
-      <Text style={styles.title}>The Game is Over!</Text>
-      <Text style={styles.number}>Number of rounds: {rounds} </Text>
-      <Text style={styles.number}>You chose: {userNumber} </Text>
+      <TitleText style={styles.title}>The Game is Over!</TitleText>
+      <View style={styles.imageContainer}>
+        <Image
+          source={require('../assets/success.png')}
+          // source={{ uri: 'https://cdn.pixabay.com/photo/2019/01/22/18/30/summit-3948706_960_720.jpg' }}
+          style={styles.image}
+          resizeMode="cover"
+        />
+      </View>
+      <View style={styles.resultContainer}>
+        <BodyText style={styles.resultText}>
+          I took <Text style={styles.highlight}>{rounds}</Text> rounds to guess your number{' '}
+          <Text style={styles.highlight}>{userNumber}</Text>
+        </BodyText>
+      </View>
       <Button title="NEW GAME" onPress={onNewGame} />
     </View>
   );
@@ -22,9 +36,32 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.secondary,
   },
   title: {
-    color: Colors.white,
     fontSize: 24,
     marginVertical: 10,
+  },
+  imageContainer: {
+    width: 300,
+    height: 300,
+    borderRadius: 150,
+    borderWidth: 3,
+    borderColor: Colors.white,
+    overflow: 'hidden',
+    marginVertical: 30,
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+  },
+  resultContainer: {
+    width: 300,
+    marginBottom: 20,
+  },
+  resultText: {
+    textAlign: 'center',
+    fontSize: 18,
+  },
+  highlight: {
+    color: Colors.primary,
     fontFamily: 'open-sans-bold',
   },
 });

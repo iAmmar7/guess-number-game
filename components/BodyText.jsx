@@ -3,8 +3,12 @@ import { StyleSheet, Text } from 'react-native';
 
 import colors from '../constants/colors';
 
-const BodyText = ({ children, style }) => {
-  return <Text style={{ ...styles.text, ...style }}>{children}</Text>;
+const BodyText = ({ children, style, ...otherProps }) => {
+  return (
+    <Text style={{ ...styles.text, ...style }} {...otherProps}>
+      {children}
+    </Text>
+  );
 };
 
 const styles = StyleSheet.create({
