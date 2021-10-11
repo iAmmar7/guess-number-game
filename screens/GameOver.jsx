@@ -12,8 +12,10 @@ const GameOver = ({ rounds, userNumber, onNewGame }) => {
       <TitleText style={styles.title}>The Game is Over!</TitleText>
       <View style={styles.imageContainer}>
         <Image
-          source={require('../assets/success.png')}
-          // source={{ uri: 'https://cdn.pixabay.com/photo/2019/01/22/18/30/summit-3948706_960_720.jpg' }}
+          // source={require('../assets/success.png')}
+          source={{
+            uri: 'https://www.nicepng.com/png/detail/72-723452_customer-retention-success-person-succes-animated.png',
+          }}
           style={styles.image}
           resizeMode="cover"
         />
