@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Platform } from 'react-native';
 
 import TitleText from './TitleText';
 
@@ -7,23 +7,34 @@ import Colors from '../constants/colors';
 
 function Header(props) {
   return (
-    <View style={styles.header}>
+    <View
+      style={{ ...styles.headerBase, ...Platform.select({ ios: styles.headerIOS, android: styles.headerAndroid }) }}
+    >
       <TitleText style={styles.title}>{props.title}</TitleText>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  header: {
+  headerBase: {
     width: '100%',
     height: 75,
     paddingTop: 30,
-    backgroundColor: Colors.primary,
     alignItems: 'center',
     justifyContent: 'center',
   },
+  headerIOS: {
+    backgroundColor: Colors.secondary,
+    borderBottomColor: Colors.accent,
+    borderBottomWidth: 1,
+  },
+  headerAndroid: {
+    backgroundColor: Colors.primary,
+    borderBottomColor: 'transparent',
+    borderBottomWidth: 0,
+  },
   title: {
-    color: Colors.secondary,
+    color: Platform.OS === 'ios' ? Colors.white : Colors.secondary,
   },
 });
 

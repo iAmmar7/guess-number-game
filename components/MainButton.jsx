@@ -1,11 +1,12 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, TouchableNativeFeedback, Platform } from 'react-native';
 
 import colors from '../constants/colors';
 
 const MainButton = ({ children, onPress, style, type, size }) => {
+  const TouchComponent = Platform.OS === 'ios' ? TouchableOpacity : TouchableNativeFeedback;
   return (
-    <TouchableOpacity activeOpacity={0.6} onPress={onPress}>
+    <TouchComponent activeOpacity={0.6} onPress={onPress}>
       <View
         style={{
           ...styles.button,
@@ -16,7 +17,7 @@ const MainButton = ({ children, onPress, style, type, size }) => {
       >
         <Text style={{ ...styles.buttonText, ...(size === 'small' && { ...styles.smallButtonText }) }}>{children}</Text>
       </View>
-    </TouchableOpacity>
+    </TouchComponent>
   );
 };
 

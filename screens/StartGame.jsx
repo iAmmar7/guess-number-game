@@ -9,6 +9,7 @@ import {
   KeyboardAvoidingView,
   Dimensions,
 } from 'react-native';
+// import * as ScreenOrientation from 'expo-screen-orientation';
 
 import Colors from '../constants/colors';
 import Card from '../components/Card';
@@ -19,6 +20,8 @@ import MainButton from '../components/MainButton';
 import NumberContainer from '../components/NumberContainer';
 
 function StartGame({ onStartGame }) {
+  // ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
+
   const [number, setNumber] = useState('');
   const [confirmed, setConfirmed] = useState(false);
   const [selectedNumber, setSelectedNumber] = useState();
