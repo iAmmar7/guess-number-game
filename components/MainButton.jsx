@@ -24,10 +24,11 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: colors.primary,
     paddingVertical: 12,
-    paddingHorizontal: 30,
+    // paddingHorizontal: 30,
     borderRadius: 10,
   },
   buttonText: {
+    textAlign: 'center',
     color: colors.white,
     fontFamily: 'open-sans',
     fontSize: 18,
@@ -37,7 +38,7 @@ const styles = StyleSheet.create({
   },
   smallButton: {
     paddingVertical: 10,
-    paddingHorizontal: 20,
+    // paddingHorizontal: 20,
   },
   smallButtonText: {
     fontSize: 16,
