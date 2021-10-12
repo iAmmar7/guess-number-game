@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, StyleSheet, Alert, ScrollView, FlatList, Dimensions } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 
 import NumberContainer from '../components/NumberContainer';
 import Card from '../components/Card';
@@ -25,6 +25,7 @@ const GameScreen = ({ userChoice, onGameOver }) => {
   const initialGuess = generateRandomBetween(1, 100, userChoice);
   const [currentGuess, setCurrentGuess] = useState(initialGuess);
   const [pastGuesses, setPastGuesses] = useState([initialGuess.toString()]);
+  const [deviceHeight, setDeviceHeight] = useState(Dimensions.get('window').height);
   const currentLow = useRef(1);
   const currentHigh = useRef(100);
 
@@ -33,6 +34,14 @@ const GameScreen = ({ userChoice, onGameOver }) => {
       onGameOver(pastGuesses.length);
     }
   }, [currentGuess]);
+
+  useEffect(() => {
+    const updateLayout = () => setDeviceHeight(Dimensions.get('window').height);
+    Dimensions.addEventListener('change', updateLayout);
+    return () => {
+      Dimensions.removeEventListener('change', updateLayout);
+    };
+  }, []);
 
   const nextGuessHandler = (direction) => {
     if (
@@ -52,16 +61,46 @@ const GameScreen = ({ userChoice, onGameOver }) => {
     setPastGuesses((prevGuesses) => [nextNumber.toString(), ...prevGuesses]);
   };
 
+  if (deviceHeight < 500) {
+    return (
+      <View style={styles.screen}>
+        <Text style={{ ...DefaultStyles.title, ...styles.title }}>My guess</Text>
+        <View style={styles.controls}>
+          <MainButton size="small" type="secondary" onPress={() => nextGuessHandler('lower')} style={styles.button}>
+            <AntDesign name="arrowdown" size={24} color="white" />
+          </MainButton>
+          <NumberContainer>{currentGuess}</NumberContainer>
+          <MainButton size="small" onPress={() => nextGuessHandler('greater')} style={styles.button}>
+            <AntDesign name="arrowup" size={24} color="white" />
+          </MainButton>
+        </View>
+        <View style={styles.listContainer}>
+          <FlatList
+            contentContainerStyle={styles.list}
+            data={pastGuesses}
+            keyExtractor={(item) => item}
+            renderItem={(itemData) => (
+              <View style={styles.listItem}>
+                <BodyText>#{pastGuesses.length - itemData.index}</BodyText>
+                <BodyText>{itemData.item}</BodyText>
+              </View>
+            )}
+          />
+        </View>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.screen}>
       <Text style={{ ...DefaultStyles.title, ...styles.title }}>My guess</Text>
       <NumberContainer>{currentGuess}</NumberContainer>
       <Card style={styles.btnContainer}>
-        <MainButton size="small" type="secondary" onPress={() => nextGuessHandler('lower')}>
-          <Ionicons name="md-remove" size={24} color="white" />
+        <MainButton size="small" type="secondary" onPress={() => nextGuessHandler('lower')} style={styles.button}>
+          <AntDesign name="arrowdown" size={24} color="white" />
         </MainButton>
-        <MainButton size="small" onPress={() => nextGuessHandler('greater')}>
-          <Ionicons name="md-add" size={24} color="white" />
+        <MainButton size="small" onPress={() => nextGuessHandler('greater')} style={styles.button}>
+          <AntDesign name="arrowup" size={24} color="white" />
         </MainButton>
       </Card>
       <View style={styles.listContainer}>
@@ -100,12 +139,22 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginVertical: 10,
   },
+  controls: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    width: '50%',
+  },
   btnContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     marginTop: Dimensions.get('window').height > 600 ? 20 : 5,
     width: 200,
+    marginTop: 0,
     maxWidth: '80%',
+  },
+  button: {
+    width: 50,
   },
   listContainer: {
     flex: 1,
