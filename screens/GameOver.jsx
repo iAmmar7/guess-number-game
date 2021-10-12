@@ -8,7 +8,7 @@ import Colors from '../constants/colors';
 
 const GameOver = ({ rounds, userNumber, onNewGame }) => {
   return (
-    <ScrollView contentContainerStyle={styles.scrollView}>
+    <ScrollView contentContainerStyle={styles.screenContainer}>
       <View style={styles.screen}>
         <TitleText style={styles.title}>The Game is Over!</TitleText>
         <View style={styles.imageContainer}>
@@ -27,29 +27,32 @@ const GameOver = ({ rounds, userNumber, onNewGame }) => {
             <Text style={styles.highlight}>{userNumber}</Text>
           </BodyText>
         </View>
-        <MainButton onPress={onNewGame}>NEW GAME</MainButton>
+        <MainButton onPress={onNewGame} style={styles.button}>
+          NEW GAME
+        </MainButton>
       </View>
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  scrollView: {
-    flex: 1,
+  screenContainer: {
+    flexGrow: 1,
+    backgroundColor: Colors.secondary,
   },
   screen: {
-    flexGrow: 1,
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: Colors.secondary,
+    paddingVertical: 20,
   },
   title: {
     fontSize: Dimensions.get('window').width > 400 ? 24 : 20,
     marginVertical: Dimensions.get('window').height > 600 ? 10 : 0,
   },
   imageContainer: {
-    width: Dimensions.get('window').width * 0.7,
-    height: Dimensions.get('window').width * 0.7,
+    width: Dimensions.get('window').height < 500 ? 200 : Dimensions.get('window').width * 0.7,
+    height: Dimensions.get('window').height < 500 ? 200 : Dimensions.get('window').width * 0.7,
     borderRadius: 150,
     borderWidth: 3,
     borderColor: Colors.white,
@@ -71,6 +74,9 @@ const styles = StyleSheet.create({
   highlight: {
     color: Colors.primary,
     fontFamily: 'open-sans-bold',
+  },
+  button: {
+    width: 130,
   },
 });
 
