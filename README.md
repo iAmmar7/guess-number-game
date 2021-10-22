@@ -2,7 +2,7 @@
 Simple mobile game to guess the user input number.
 
 ## *Purpose*
-*The purpose of this project is to understand how we can modify orignal React Native components and create our own customized generic components that can be utilized anywhere in our application*
+:bangbang: *The purpose of this project is to understand how we can modify orignal React Native components and create our own customized generic components that can be utilized anywhere in our application* :bangbang:
 
 ## App screens (Android)
 | Start game screen                               | Game screen                                | Game Over screen                               |
